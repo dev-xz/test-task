@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"reflect"
+	"time"
 )
 
 // 定义可执行的方法
@@ -14,6 +15,8 @@ func (m Methods) Method1() {
 }
 
 func (m Methods) Method2() {
+	fmt.Println("Executing Method2: Start Sleep.")
+	time.Sleep(5 * time.Second)
 	fmt.Println("Executing Method2: Hello from Method2!")
 }
 
