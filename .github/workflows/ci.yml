@@ -44,7 +44,7 @@ jobs:
       - name: Build Docker Image
         run: |
           docker build -t ${{ vars.DOCKERHUB_USERNAME }}/test-task:${{ env.TAG }} \
-                       -t ${{ secrets.DOCKER_USERNAME }}/test-task:${{ env.LATEST }} .
+                       -t ${{ vars.DOCKERHUB_USERNAME }}/test-task:${{ env.LATEST }} .
 
       # 推送 Docker 镜像
       - name: Push Docker Image
