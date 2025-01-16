@@ -12,7 +12,7 @@ jobs:
     steps:
       # 检出代码
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 设置 Go 环境
       - name: Setup Go
@@ -33,6 +33,10 @@ jobs:
           echo "TAG=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
           echo "LATEST=latest" >> $GITHUB_ENV
 
+      # 设置 Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       # 登录 DockerHub
       - name: Login to DockerHub
         uses: docker/login-action@v3
@@ -41,13 +45,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       # 构建 Docker 镜像
-      - name: Build Docker Image
+      - name: Build and Push Multi-Arch Image
         run: |
-          docker build -t ${{ vars.DOCKERHUB_USERNAME }}/test-task:${{ env.TAG }} \
-                       -t ${{ vars.DOCKERHUB_USERNAME }}/test-task:${{ env.LATEST }} .
-
-      # 推送 Docker 镜像
-      - name: Push Docker Image
-        run: |
-          docker push ${{ vars.DOCKERHUB_USERNAME }}/test-task:${{ env.TAG }}
-          docker push ${{ vars.DOCKERHUB_USERNAME }}/test-task:${{ env.LATEST }}
+          docker buildx build \
+            --platform linux/amd64,linux/arm64 \
+            --tag ${{ vars.DOCKERHUB_USERNAME }}/test-task:${{ env.TAG }} \
+            --tag ${{ vars.DOCKERHUB_USERNAME }}/test-task:${{ env.LATEST }} \
+            --push .
