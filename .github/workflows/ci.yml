@@ -47,3 +47,4 @@ jobs:
       - name: Push Docker Image
         run: |
           docker push ${{ vars.DOCKERHUB_USERNAME }}/test-task:${{ env.TAG }}
+          docker push ${{ vars.DOCKERHUB_USERNAME }}/test-task:latest
