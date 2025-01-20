@@ -16,7 +16,7 @@ func (m Methods) Method1() {
 
 func (m Methods) Method2() {
 	fmt.Println("Executing Method2: Start Sleep.")
-	time.Sleep(5 * time.Second)
+	time.Sleep(20 * time.Second)
 	fmt.Println("Executing Method2: Hello from Method2!")
 }
 
