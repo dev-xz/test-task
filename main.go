@@ -21,7 +21,10 @@ func (m Methods) Method2() {
 }
 
 func (m Methods) Method3() {
-	fmt.Println("Executing Method3: Hello from Method3!")
+	fmt.Println("Executing Method3: Start Sleep.")
+	time.Sleep(5 * time.Second)
+	fmt.Println("Executing Method3: Start Panic.")
+	panic("test panic")
 }
 
 func main() {
